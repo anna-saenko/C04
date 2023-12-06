@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
-#include <stdio.h>
 
 int	ft_strlen(char *str)
 {
@@ -24,40 +23,36 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int	check_duplicates(char *str)
+int	check_duplicates(char *str, int len)
 {
 	int	i;
 	int	j;
-	int	duplicates;
-	int	len;
 
 	i = 0;
 	j = i + 1;
-	len = ft_strlen(str);
-	duplicates = 0;
 	while (i < len - 1)
 	{
 		while (j < len)
 		{
 			if (str[i] == str[j])
 			{
-				duplicates++;
+				return (1);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (duplicates);
-} 
+	return (0);
+}
 
 int	check_base(char *str)
 {
 	int	i;
-	int j;
-	int len = ft_strlen(str);
-	int	duplicates;	
+	int	len;
+	int	duplicates;
 
-	if(!str || len == 1)
+	len = ft_strlen(str);
+	if(!str || len < 2)
 		return (0);
 	i = 0;
 	while (str[i])
@@ -66,10 +61,7 @@ int	check_base(char *str)
 			return (0);
 		i++;
 	}
-
-	i = 0;
-	j = 1;
-	duplicates = check_duplicates(str);
+	duplicates = check_duplicates(str, len);
 	if (duplicates)
 	{
 		return (0);
@@ -81,7 +73,7 @@ void	ft_putnbr_base(int nbr, char *base)
 {
 	int		base_n;
 	char	c;
-	
+
 	base_n = check_base(base);
 	if (base_n > 0)
 	{
@@ -108,12 +100,12 @@ int	main(void)
 	char	*octal;
 	char	*wrong;
 
-	n = 3;
+	n = 769;
 	decimal = "0123456789";
 	binary = "01";
 	hexadecimal = "0123456789ABCDEF";
 	octal = "poneyvif";
-	wrong = "001";
+	wrong = "pponeyvif";
 	ft_putnbr_base(n, decimal);
 	write(1, "\n", 1);
     ft_putnbr_base(n, binary);
